@@ -46,4 +46,20 @@ class AppTest {
         r.modificaPrenotazione(p,p1);
         assertEquals(p1, r.prenotazioni.get("fabio").getFirst());
     }
+    @Test
+    void eliminaPrenotazione(){
+        r.aggiungiCliente("giacomo");
+        Prenotazione p = new Prenotazione("giacomo", LocalDate.of(2017,05,26), LocalDate.of(2017,06,10), 5);
+        r.aggiungiPrenotazione(p);
+        r.eliminaPrenotazione(p);
+        assertEquals(0, r.prenotazioni.get("giacomo").size());
+    }
+    /* 
+    @Test
+    void ricercaPerCliente(){
+        r.aggiungiCliente("giacomo");
+        Prenotazione p = new Prenotazione("giacomo", LocalDate.of(2017,05,26), LocalDate.of(2017,06,10), 5);
+        assertEquals(p, r.ricercaPerCliente("giacomo"));
+    }
+   */ 
 }
