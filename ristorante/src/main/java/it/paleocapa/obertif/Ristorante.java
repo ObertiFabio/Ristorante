@@ -76,12 +76,12 @@ public class Ristorante
         return prenotazioni.get(nome).stream();
     }
     
-    public Stream ricercaPerData(LocalDate dataDaRicercare){
-        return prenotazioni.values().stream().flatMap(Collection::stream).filter(p -> p.dataPrenotazione == dataDaRicercare);
+    public Stream<Prenotazione> ricercaPerData(LocalDate dataDaRicercare){
+        return prenotazioni.values().stream().flatMap(Collection::stream).filter(p -> p.dataPrenotazione.compareTo(dataDaRicercare)==0);
     }
     
     public int copertiPerData(LocalDate dataDaRicercare){
-        return prenotazioni.values().stream().flatMap(Collection::stream).filter(a -> a.dataPrenotazione == dataDaRicercare).reduce(0, (partial, e) -> partial+e.coperti, Integer::sum);
+        return prenotazioni.values().stream().flatMap(Collection::stream).filter(a -> a.dataPrenotazione.compareTo(dataDaRicercare)==0).reduce(0, (partial, e) -> partial+e.coperti, Integer::sum);
     }
     
     public int copertiPerCliente(String nome){
@@ -95,7 +95,7 @@ public class Ristorante
     public LocalDate maggiorNumeroCoperti(){
         LinkedList<LocalDate> date = new LinkedList<LocalDate>();
         int max = -1;
-        LocalDate maxDate = LocalDate.of(0,0,0);
+        LocalDate maxDate = LocalDate.of(1,1,1);
         prenotazioni.values().stream().flatMap(Collection::stream).filter(a -> a.dataPrenotazione.isBefore(LocalDate.now()) && !date.contains(a.getDataPrenotazione())).forEach(a -> date.add(a.getDataPrenotazione()));
         //non funziona con forEach();
         Iterator<LocalDate> i = date.iterator();
